@@ -7,7 +7,7 @@
     "default_title": "CWA_Paser/ALERT",
     "default_popup": "popup.html"
   },
-  "host_permissions":["<all_urls>"],
+  "host_permissions":["http://earthquake.usgs.gov/*", "https://earthquake.usgs.gov/*"],
   "permissions": [
     "tabs",
     "windows",
@@ -17,10 +17,10 @@
     ],
   "background": {
     "service_worker": "background.js",
-    "matches" : ["http://*/*","https://*/*"]
+    "matches" : ["http://earthquake.usgs.gov/*","https://earthquake.usgs.gov/*"]
   },
   "content_scripts": [{
-    "matches": [ "http://*/*", "https://*/*"],
+    "matches": [ "http://earthquake.usgs.gov/*", "https://earthquake.usgs.gov/*"],
     "js": ["content.js"]
   }],
   "icons": {
