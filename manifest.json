@@ -1,0 +1,32 @@
+{ 
+  "manifest_version": 3,
+  "name": "USGS_Paser/ALERT",
+  "description": "Coded by LEE JUNSUNG",
+  "version": "2.0",
+  "action": {
+    "default_title": "CWA_Paser/ALERT",
+    "default_popup": "popup.html"
+  },
+  "host_permissions":["<all_urls>"],
+  "permissions": [
+    "tabs",
+    "windows",
+    "activeTab",
+    "storage",
+    "offscreen"
+    ],
+  "background": {
+    "service_worker": "background.js",
+    "matches" : ["http://*/*","https://*/*"]
+  },
+  "content_scripts": [{
+    "matches": [ "http://*/*", "https://*/*"],
+    "js": ["content.js"]
+  }],
+  "icons": {
+    "16": "eq.png",
+    "32": "eq.png",
+    "48": "eq.png",
+    "128": "eq.png"
+  }
+}
