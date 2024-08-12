@@ -776,6 +776,17 @@ async function nochange(){
                 if(MAG_TRIGGERED){ // tts and poppu blocked afeter the first alarm;
                     MAG_TRIGGERED = false;
                     // popup here
+                    if(_prev_current_diff>1){ 
+                        const diff = _prev_current_diff;
+                        _prev_current_diff = 0;
+                        for(let k=0; k < diff; k++){
+                            if((await first_data.metadata.generated - await first_target_data[k].properties.time) <= DEFINE_USER_HOUR){
+                                if(await first_target_data[_prev_current_diff_arr[k]].properties.mag >= DEFINE_USER_MAG){
+                                    _prev_current_diff = _prev_current_diff + 1;
+                                }
+                            }
+                        }
+                    }
                     if(_prev_current_diff>1){
                         for(let k=0; k < _prev_current_diff; k++){
                             if((await first_data.metadata.generated - await first_target_data[k].properties.time) <= DEFINE_USER_HOUR){
