@@ -5,7 +5,8 @@ Coded by JunSung Lee (ljs_fr@live.com)
 
 # COPYRIGHTS <br />
 Every geojson is under rights of USGS (not included in this source && only used when program is running) <br />
-Also, This extension is not meant to store geojson, but chrome cache algorithm and [devtools: extension log](Depends on how user gives an option...).  <br />
+Also, This extension is not meant to store geojson, but chrome cache algorithm and [devtools: extension log].<br />
+Depends on how user gives an option...  <br />
 **Credit: U.S. Geological Survey**   <br />
 **Department of the Interior/USGS**  <br />
 **U.S. Geological Survey/photo by Jane Doe (if the photographer/artist is known)**  <br />
