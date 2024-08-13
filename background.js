@@ -498,6 +498,7 @@ async function nochange(){
                     }
                 }catch(err){
                     console.log(err + ' [err] found while injecting codes => so reload the lasttab');
+                    mon_started = false;
                     find_tab();
                     return;
                 };
@@ -770,6 +771,7 @@ async function nochange(){
                         }
                     }catch(err){
                         console.log(err + ' err found while injection');
+                        mon_started = false;
                         find_tab();
                         return;
                     };
@@ -873,6 +875,7 @@ async function popnloc(lasttabUsed, DEFINE_USER_MAG, target_num_automatic, targe
             await chrome.tabs.sendMessage(lasttabUsed, {message:"popnloc", data: { DEFINE_USER_MAG, target_num_automatic, target_num_reviewed, target_num_undefined, auto_reviewed }});
         }catch(error){
             console.log(error + ' maybe the page is not loaded properly -> force reload the page!');
+            mon_started = false;
             find_tab();
         }
     }, 2000);
