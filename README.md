@@ -4,7 +4,7 @@ eq.png is created by bing AI DALL·E3; <br />
 Coded by JunSung Lee (ljs_fr@live.com)
 
 # LICENSE & COPYRIGHTS <br />
-Every geojson is under rights of USGS (not included in this source && only used when program is running) <br />
+Every geojson is under rights of USGS (not included in this source but its(geojson) url && only used when program is running) <br />
 Also, This extension is not meant to store geojson, but chrome cache algorithm and [devtools: extension log].<br />
 Depends on how user gives an option...  <br />
 **Credit: U.S. Geological Survey**   <br />
