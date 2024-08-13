@@ -863,7 +863,8 @@ async function nochange(){
     if(server_down || data_down){
         return "Down";
     }
-    await popnloc(lasttabUsed, DEFINE_USER_MAG, target_num_automatic, target_num_reviewed, target_num_undefined, auto_reviewed);
+    await chrome.tabs.reload(lasttabUsed);
+    //await popnloc(lasttabUsed, DEFINE_USER_MAG, target_num_automatic, target_num_reviewed, target_num_undefined, auto_reviewed);
     console.log('Done');
     return 'Done';
 }
