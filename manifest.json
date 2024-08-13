@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "USGS_Parser/ALERT",
   "description": "Coded by LEE JUNSUNG",
-  "version": "2.0",
+  "version": "2.01",
   "action": {
     "default_title": "USGS_Parser/ALERT",
     "default_popup": "popup.html"

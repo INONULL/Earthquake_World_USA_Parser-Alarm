@@ -30,7 +30,10 @@ chrome.runtime.onMessage.addListener(function (request) {
         const arr_c = ()=> {if(data.target_num_undefined==null){return []}else{return data.target_num_undefined}};
         const concat_ab = arr_a().concat(arr_b());
         const concat_abc = concat_ab.concat(arr_c());
-        latest = Math.min(...concat_abc);
+        if((concat_abc.length == 0 && concat_abc == [])){
+        }else{
+            latest = Math.min(...concat_abc);
+        }
         popnloc(latest);
       return;
     }
