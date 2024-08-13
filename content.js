@@ -301,6 +301,7 @@ function prohibit(){
   chklabel.innerHTML = '<!---->';
   return;
 }
+let clicked_once = false;
 function popnloc(last){
     let arr_num = 1;
     if(last == null){
@@ -308,14 +309,15 @@ function popnloc(last){
     }else{
         arr_num = last+1;
     }
-    const main_target  = document.querySelectorAll('mat-list-item')[arr_num];
-    if(main_target == null){
-    }else{
-      const bool_seleted = main_target.classList.contains('selected');
-      if(!bool_seleted){
-          main_target.click();
-      }
+  const main_target  = document.querySelectorAll('mat-list-item')[arr_num];
+  if(main_target == null){
+  }else{
+    const bool_seleted = main_target.classList.contains('selected');
+    if(!bool_seleted && !clicked_once){
+        main_target.click();
+        clicked_once = true;
     }
+  }
   const card = document.querySelector('usgs-details-info-box');
   if(card.innerHTML != '<!---->' & card.innerHTML != null & card.innerHTML != undefined){
     if(last_state == "more"){
