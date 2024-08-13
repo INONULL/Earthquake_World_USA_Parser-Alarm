@@ -310,7 +310,7 @@ function popnloc(last){
     }
   const main_target  = document.querySelectorAll('mat-list-item')[arr_num];
   const bool_seleted = main_target.classList.contains('selected');
-  if(!bool_seleted){
+  if(bool_seleted == null){
       main_target.click();
   }
   const card = document.querySelector('usgs-details-info-box');
