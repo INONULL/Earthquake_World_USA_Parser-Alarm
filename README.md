@@ -3,7 +3,7 @@ By parsing USGS earthquake geojson, it alerts with a TTS and popup with given op
 eq.png is created by bing AI DALL·E3; <br />
 Coded by JunSung Lee (ljs_fr@live.com)
 
-# COPYRIGHTS <br />
+# LICENSE & COPYRIGHTS <br />
 Every geojson is under rights of USGS (not included in this source && only used when program is running) <br />
 Also, This extension is not meant to store geojson, but chrome cache algorithm and [devtools: extension log].<br />
 Depends on how user gives an option...  <br />
