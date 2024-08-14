@@ -826,18 +826,20 @@ async function nochange(){
                                 return await _prev_current_diff_arr[0];
                             }
                         }
-                        if(["reviewed", "REVIEWED"].includes(await first_target_data[await arr()].properties.status)){
-                            const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! reviewed!`
-                            console.log(Text_tts);
-                            await playMP3('Alert.mp3_reviewed', Text_tts, [mag, packed_data]);
-                        }else if (["automatic", "AUTOMATIC"].includes(await first_target_data[await arr()].properties.status)){
-                            const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! not yet reviewed!`
-                            console.log(Text_tts);
-                            await playMP3('Alert.mp3_automatic', Text_tts, [mag, packed_data]);
-                        }else{
-                            const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! undefined status!`
-                            console.log(Text_tts);
-                            await playMP3('Alert.mp3_undefined', Text_tts, [mag, packed_data]);
+                        if((await first_data.metadata.generated - await first_target_data[0].properties.time) <= DEFINE_USER_HOUR){
+                            if(["reviewed", "REVIEWED"].includes(await first_target_data[await arr()].properties.status)){
+                                const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! reviewed!`
+                                console.log(Text_tts);
+                                await playMP3('Alert.mp3_reviewed', Text_tts, [mag, packed_data]);
+                            }else if (["automatic", "AUTOMATIC"].includes(await first_target_data[await arr()].properties.status)){
+                                const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! not yet reviewed!`
+                                console.log(Text_tts);
+                                await playMP3('Alert.mp3_automatic', Text_tts, [mag, packed_data]);
+                            }else{
+                                const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! undefined status!`
+                                console.log(Text_tts);
+                                await playMP3('Alert.mp3_undefined', Text_tts, [mag, packed_data]);
+                            }
                         }
                     }
                 }
