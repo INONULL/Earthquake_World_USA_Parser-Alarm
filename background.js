@@ -49,7 +49,7 @@ async function ignition(){ // one-time-function: OTF
                     if(mon_started && lasttabUsed != null){
                         countdown--;
                         if(countdown>=0){
-                            console.log(`${countdown}seconds has been remaining!`);
+                            console.log(`${countdown} seconds has been remaining!`);
                         }
                         if(countdown <= 0){
                             if(await chrome.offscreen.hasDocument()){
@@ -100,16 +100,35 @@ async function ignition(){ // one-time-function: OTF
     }
 }ignition();
 //////////////////////([설정] && [상태 체크])///////////////////////
+let prev_current_diff_arr_clone = null;
+let prev_first_data_clone;
 let howismaass = 'USGS창 없음';
 let DEFINE_USER_HOUR = 3600000;
 let restart_counter = 0;
 chrome.runtime.onMessage.addListener(async function (request) {
     try{
         if(request.message === 'user_mag'){
-            DEFINE_USER_MAG = await request.data;
-            //prev_first_data_first = undefined;
-            //_prev_first_data = undefined;
-            await main();
+            if(prev_current_diff_arr_clone == null){
+                prev_current_diff_arr_clone = _prev_current_diff_arr;
+            }
+            if(DEFINE_USER_MAG != await request.data){
+                DEFINE_USER_MAG = await request.data;
+                target_num_automatic = null;
+                target_num_reviewed = null;
+                target_num_undefined = null;
+                USER_DEFINE_TRIGGERED = false;
+                MAG_TRIGGERED = false;
+                chk_0_changed = false;
+                changed_in_nested = false;
+                const first_data = await fetch_url_parsing();
+                const first_target_data = await first_data.features;
+                _prev_first_data = await first_target_data;
+                for(let i = 0; i < prev_current_diff_arr_clone.length; i++){
+                    _prev_first_data[prev_current_diff_arr_clone[i]].id = 'reset';
+                    _prev_first_data[prev_current_diff_arr_clone[i]].properties.mag = 'reset';
+                }
+            }
+            await main();// <= coloring should be fixed;
             //console.log('user mag: ' + DEFINE_USER_MAG);
         }else if(request.message === 'user_mag_clean'){
             // When user changes USER_DEFINE_MAG will 'not' reload the page <- 필요시 따로 선언하면 됨.
@@ -259,22 +278,22 @@ chrome.tabs.onRemoved.addListener(function(tabid) { // tab exit handling
 (async function mainofmain() { //
     let result;
     restart_counter_func();
-    while (true) {
-        try {
-            result = await main();
-            if(result == 'Done'){
-                continue;
-            }else if(result == 'Down'){
+        while (true) {
+            try {
+                result = await main();
+                if(result == 'Done'){
+                    continue;
+                }else if(result == 'Down'){
+                    await new Promise(r => setTimeout(r, 2000));
+                    continue;
+                }else{
+                }
+            } catch (err) {
                 await new Promise(r => setTimeout(r, 2000));
                 continue;
-            }else{
             }
-        } catch (err) {
-            await new Promise(r => setTimeout(r, 2000));
-            continue;
+                await new Promise(r => setTimeout(r, 2000));
         }
-            await new Promise(r => setTimeout(r, 2000));
-    }
 })();
 /////////////////////////////////////
 //split restart counter 
@@ -383,7 +402,7 @@ async function main(){
                     }else{
                         for(let i = 0; i < first_target_data.length; i++){
                             if(await prev_first_data_first[0].toString() == await first_target_data[i].id.toString()){
-                                console.log('new Data has been piled up from the last exit!');
+                                console.log('new Data has been piled up since the last exit!');
                                 prev_first_data_first = undefined; // if status reviewed is needed, use this variable
                                 last_exit_diff = i;
                                 await _prev_first_data.splice(0, i);
@@ -452,14 +471,35 @@ if(((_prev_first_data != null)&&(_prev_first_data.toString() != await first_targ
     if (diff_check.length>0 || diff_swt.includes(true)){
         if_data_changed = true;
     }
-    //console.log(diff_swt);
+    if(prev_current_diff_arr_clone != null && diff_check != null){
+        if(diff_check.length != prev_current_diff_arr_clone.length){
+            prev_current_diff_arr_clone = null;
+        }
+        if(diff_check.length > prev_current_diff_arr_clone.length){
+            for(let i=0; i<prev_current_diff_arr_clone.length; i++){
+                if(diff_check[i] != prev_current_diff_arr_clone[i]){
+                    prev_current_diff_arr_clone = null;
+                    break;
+                }
+            }
+        }else if(diff_check.length <= prev_current_diff_arr_clone.length){
+            for(let i=0; i<diff_check.length; i++){
+                if(prev_current_diff_arr_clone[i] != diff_check[i]){
+                    prev_current_diff_arr_clone = null;
+                    break;
+                }
+            }
+        }
+    }
     if(deleted_swt && !diff_swt.includes(true)){ // if data not changed
+        prev_current_diff_arr_clone = null;
         _prev_first_data = await first_target_data;
         if_data_changed = false;
         await chrome.storage.sync.set({prev_first_data_storage: [await _prev_first_data[0].id, await _prev_first_data[0].properties.mag]}, async function() {});
         await chrome.storage.sync.set({prev_target_num_auto_rev: [await target_num_automatic, await target_num_reviewed, await target_num_undefined, await auto_reviewed]}, async function() {});
+        await chrome.tabs.reload(lasttabUsed);
         console.log('Done');
-        return "Done"
+        return "Done";
     }
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -471,18 +511,19 @@ async function nochange(){
             return await _prev_current_diff_arr[0];
         }
     }
+    const const_arr = await arr();
     USER_DEFINE_TRIGGERED = false;
     if(DEFINE_USER_MAG == undefined | DEFINE_USER_MAG == null){
         DEFINE_USER_MAG = 6;
     }
-    if(["automatic", "AUTOMATIC"].includes(await first_target_data[await arr()].properties.status)){
+    if(["automatic", "AUTOMATIC"].includes(await first_target_data[const_arr].properties.status)){
         auto_reviewed = true;
-    }else if(["reviewed", "REVIEWED"].includes(await first_target_data[await arr()].properties.status)){
+    }else if(["reviewed", "REVIEWED"].includes(await first_target_data[const_arr].properties.status)){
         auto_reviewed = false;
     }else{
         auto_reviewed = undefined;
     }
-    const mag = await first_target_data[await arr()].properties.mag;
+    const mag = await first_target_data[const_arr].properties.mag;
     if(mag >= DEFINE_USER_MAG){
         await chrome.tabs.sendMessage(lasttabUsed, {message:"more", data: { DEFINE_USER_MAG, target_num_automatic, target_num_reviewed, target_num_undefined, auto_reviewed }});
     }else if(mag < DEFINE_USER_MAG){
@@ -514,13 +555,13 @@ async function nochange(){
                     if(last_exit_diff>0){
                         _prev_current_diff = last_exit_diff;
                         for(let i = 0; i < _prev_current_diff; i++){
-                            _prev_current_diff_arr[i] = i;
+                                _prev_current_diff_arr[i] = i;
                         }
                     }
                     if((diff_check.length>0)){
                         _prev_current_diff = diff_check.length;
                         _prev_current_diff_arr = diff_check;
-                        console.log(_prev_current_diff_arr);
+                        //console.log(_prev_current_diff_arr);
                     }
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                     for(let k = 0; k < changed_in_time.length; k++){
@@ -667,11 +708,6 @@ async function nochange(){
                     }
                 }
                 const second_target_data = await second_data();
-                const detect_time = await time_parser(parseInt(await second_target_data.time));
-                const update_time = await time_parser(parseInt(await second_target_data.updated));
-                const place_full = await second_target_data.place;
-                const place_region = await region(place_full);
-                const place_city = await city(place_full);
                 async function geo_data(){
                     if(first_target_data[_prev_current_diff_arr[0]] == null){
                         return await first_target_data[0].geometry.coordinates
@@ -680,7 +716,6 @@ async function nochange(){
                     }
                 }
                 const lnglatdep = await geo_data();
-                const packed_data = {detect_time, update_time, place_full, lnglatdep};
                 const mag = Math.round(parseFloat(second_target_data.mag) * 10, 2) / 10;
                 if(_prev_current_diff>0){
                     target_num_automatic = [];
@@ -778,17 +813,25 @@ async function nochange(){
                 if(MAG_TRIGGERED){ // tts and poppu blocked afeter the first alarm;
                     MAG_TRIGGERED = false;
                     // popup here
+                    let _prev_current_diff_arr_clone = [];
                     if(_prev_current_diff>1){ 
                         const diff = _prev_current_diff;
                         _prev_current_diff = 0;
                         for(let k=0; k < diff; k++){
-                            if((await first_data.metadata.generated - await first_target_data[k].properties.time) <= DEFINE_USER_HOUR){
+                            if((await first_data.metadata.generated - await first_target_data[_prev_current_diff_arr[k]].properties.time) <= DEFINE_USER_HOUR){
                                 if(await first_target_data[_prev_current_diff_arr[k]].properties.mag >= DEFINE_USER_MAG){
                                     _prev_current_diff = _prev_current_diff + 1;
+                                    _prev_current_diff_arr_clone.push(_prev_current_diff_arr[k]);
                                 }
                             }
                         }
                     }
+                    if(_prev_current_diff_arr_clone.length <= 0){ // avoid err
+                        console.log("Done");
+                        return "Done";
+                    }
+                    _prev_current_diff_arr = _prev_current_diff_arr_clone;
+                    console.log(_prev_current_diff_arr);
                     if(_prev_current_diff>1){
                         for(let k=0; k < _prev_current_diff; k++){
                             if((await first_data.metadata.generated - await first_target_data[k].properties.time) <= DEFINE_USER_HOUR){
@@ -820,18 +863,28 @@ async function nochange(){
                         }
                     }else{
                         async function arr(){
-                            if(first_target_data[_prev_current_diff_arr[0]] == null){
+                            if(first_target_data[await _prev_current_diff_arr[0]] == null){
                                 return 0;
                             }else{
                                 return await _prev_current_diff_arr[0];
                             }
                         }
-                        if((await first_data.metadata.generated - await first_target_data[0].properties.time) <= DEFINE_USER_HOUR){
-                            if(["reviewed", "REVIEWED"].includes(await first_target_data[await arr()].properties.status)){
+                        const const_arr = await arr();
+                        const second_target_data = await first_target_data[const_arr].properties;
+                        const detect_time = await time_parser(parseInt(second_target_data.time));
+                        const update_time = await time_parser(parseInt(second_target_data.updated));
+                        const place_full = await second_target_data.place;
+                        const place_region = await region(place_full);
+                        const place_city = await city(place_full);
+                        const mag =  await second_target_data.mag;
+                        const lnglatdep = await first_target_data[const_arr].geometry.coordinates;
+                        const packed_data = {detect_time, update_time, place_full, lnglatdep};
+                        if((await first_data.metadata.generated - await first_target_data[const_arr].properties.time) <= DEFINE_USER_HOUR){
+                            if(["reviewed", "REVIEWED"].includes(await first_target_data[const_arr].properties.status)){
                                 const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! reviewed!`
                                 console.log(Text_tts);
                                 await playMP3('Alert.mp3_reviewed', Text_tts, [mag, packed_data]);
-                            }else if (["automatic", "AUTOMATIC"].includes(await first_target_data[await arr()].properties.status)){
+                            }else if (["automatic", "AUTOMATIC"].includes(await first_target_data[const_arr].properties.status)){
                                 const Text_tts = `USGS, near ${place_region}, ${place_city}, magnitude ${mag} has been detected! not yet reviewed!`
                                 console.log(Text_tts);
                                 await playMP3('Alert.mp3_automatic', Text_tts, [mag, packed_data]);
