@@ -1,7 +1,9 @@
-# USGS_Parser-Alarm (Chrome_Extension)
+# XXXX_Parser-Alarm (Chrome_Extension)
 By parsing USGS earthquake geojson, it alerts with a TTS and popup with given options. <br />
 eq.png is created by bing AI DALL·E3; <br />
 Coded by JunSung Lee (ljs_fr@live.com)
+Following by the rule: [**Use of Trademarked USGS Identifier by Non-USGS Organizations**](https://www.usgs.gov/information-policies-and-instructions/use-trademarked-usgs-identifier-non-usgs-organizations) 🔨🧐😕🫤<br>
+Using Earthquake instead of USGS <br />
 
 # LICENSE & COPYRIGHTS <br />
 Every geojson is under rights of USGS (not included in this source but its(geojson) url && only used when program is running) <br />
