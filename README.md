@@ -23,7 +23,7 @@ Install: [**Extension**](https://chrome.google.com/webstore/detail/dplogfgdbafeg
 ※ eq.png is created by bing AI DALL·E3; follows no_copyright <br />
 
 
-# USGS Alert Program Manual
+# Alert Program Manual
 
 ### 1. Supported Features
 
