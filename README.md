@@ -11,6 +11,7 @@ Depends on how user gives an option...  <br />
 **Department of the Interior/USGS**  <br />
 **U.S. Geological Survey/photo by Jane Doe (if the photographer/artist is known)**  <br />
 [**USGS COPYRIGHT POLICY**](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits)  <br />
+[**Acknowledging or Crediting USGS**](https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs) <br />
 **Else, follows GPLv3**  <br />
 Install: [**Extension**](https://chrome.google.com/webstore/detail/dplogfgdbafegaplfhlnmoagoeibodeb) <br />
 ※ eq.png is created by bing AI DALL·E3; follows no_copyright <br />
