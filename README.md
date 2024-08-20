@@ -11,7 +11,7 @@ Depends on how user gives an option...  <br />
 **Department of the Interior/USGS**  <br />
 **U.S. Geological Survey/photo by Jane Doe (if the photographer/artist is known)**  <br />
 [**USGS COPYRIGHT POLICY**](https://www.usgs.gov/information-policies-and-instructions/copyrights-and-credits)  <br />
-**This is opensource freeware (no cost)**
+**This is opensource freeware (no cost)** <br />
 [**Acknowledging or Crediting USGS**](https://www.usgs.gov/information-policies-and-instructions/acknowledging-or-crediting-usgs) <br />
 **Else, follows GPLv3**  <br />
 Install: [**Extension**](https://chrome.google.com/webstore/detail/dplogfgdbafegaplfhlnmoagoeibodeb) <br />
