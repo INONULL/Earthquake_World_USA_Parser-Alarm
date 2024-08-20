@@ -1,10 +1,10 @@
 { 
   "manifest_version": 3,
-  "name": "USGS_Parser/ALERT",
+  "name": "Earthquake (ALERT)",
   "description": "Coded by LEE JUNSUNG",
-  "version": "2.05",
+  "version": "2.06",
   "action": {
-    "default_title": "USGS_Parser/ALERT",
+    "default_title": "PARSER/ALERT",
     "default_popup": "popup.html"
   },
   "host_permissions":["http://earthquake.usgs.gov/*", "https://earthquake.usgs.gov/*"],
