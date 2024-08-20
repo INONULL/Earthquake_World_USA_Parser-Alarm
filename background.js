@@ -471,7 +471,7 @@ if(((_prev_first_data != null)&&(_prev_first_data.toString() != await first_targ
     if (diff_check.length>0 || diff_swt.includes(true)){
         if_data_changed = true;
     }
-    if(prev_current_diff_arr_clone != null && diff_check != null){
+    if(prev_current_diff_arr_clone != null){
         if(diff_check.length != prev_current_diff_arr_clone.length){
             prev_current_diff_arr_clone = null;
         }
@@ -814,7 +814,7 @@ async function nochange(){
                     MAG_TRIGGERED = false;
                     // popup here
                     let _prev_current_diff_arr_clone = [];
-                    if(_prev_current_diff>1){ 
+                    if(_prev_current_diff>0){ 
                         const diff = _prev_current_diff;
                         _prev_current_diff = 0;
                         for(let k=0; k < diff; k++){
