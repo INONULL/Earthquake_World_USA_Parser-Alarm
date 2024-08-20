@@ -1,4 +1,4 @@
-# XXXX_Parser-Alarm (Chrome_Extension)
+# Earthquake_Parser-Alarm (Chrome_Extension)
 By parsing USGS earthquake geojson, it alerts with a TTS and popup with given options. <br />
 eq.png is created by bing AI DALL·E3; <br />
 Coded by JunSung Lee (ljs_fr@live.com)
