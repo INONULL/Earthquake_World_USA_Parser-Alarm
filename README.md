@@ -19,7 +19,7 @@ Depends on how user gives an option...  <br />
 [**Use of Trademarked USGS Identifier by Non-USGS Organizations**](https://www.usgs.gov/information-policies-and-instructions/use-trademarked-usgs-identifier-non-usgs-organizations) 🔨🧐😕🫤<br> 
 [**USGS Visual Identity System**](https://www.usgs.gov/information-policies-and-instructions/usgs-visual-identity-system) <br />
 **Else, follows GPLv3**  <br />
-Install: [**Extension**](https://chrome.google.com/webstore/detail/dplogfgdbafegaplfhlnmoagoeibodeb) <br />
+Install: [**Extension**](https://chromewebstore.google.com/detail/earthquake-alert/dkenphdcencoohjflhlmmdllcgnhechl?hl=en-US&utm_source=ext_sidebar) <br />
 ※ eq.png is created by bing AI DALL·E3; follows no_copyright <br />
 
 
